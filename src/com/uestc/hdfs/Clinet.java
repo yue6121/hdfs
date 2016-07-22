@@ -26,10 +26,12 @@ public class Clinet {
 		/* 分配空间，更新元数据*/
 		List<String> chunk_ids = nameNode.connect(filename, num_chunks);
 		for(int i=0;i<chunk_ids.size();i++){
+			//一个chunk备份两份，总共三份
 			chunkloc = i%nameNode.num_datanodes;
 			nameNode.datanodes.get(chunkloc).write(chunk_ids.get(i).toString(), chunks.get(i));
 			chunkloc = (i+1)%nameNode.num_datanodes;
-			System.out.println(chunkloc);
+			nameNode.datanodes.get(chunkloc).write(chunk_ids.get(i).toString(), chunks.get(i));
+			chunkloc = (i+2)%nameNode.num_datanodes;
 			nameNode.datanodes.get(chunkloc).write(chunk_ids.get(i).toString(), chunks.get(i));
 		}
 	}
@@ -47,7 +49,11 @@ public class Clinet {
 				String data_temp = nameNode.datanodes.get(chunloc).read(id);
 				if(data_temp.equals("-1")){
 					data_temp = nameNode.datanodes.get((chunloc+1)%nameNode.num_datanodes).read(id);
-					System.out.println("current chunk is broken");
+					System.out.println("current chunk"+id+" in "+chunloc+" is broken");
+					if(data_temp.equals("-1")){
+						data_temp = nameNode.datanodes.get((chunloc+2)%nameNode.num_datanodes).read(id);
+						System.out.println("current chunk"+id+" in "+(chunloc+1)+" is broken");
+					}
 				}
 				data += data_temp;
 			}
