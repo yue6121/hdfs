@@ -33,6 +33,7 @@ public class Command {
 				System.out.println();
 				continue;
 			case "exit":
+				client.NameNodeSerial();
 				System.exit(0);
 
 			default:

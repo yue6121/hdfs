@@ -1,18 +1,19 @@
 package com.uestc.hdfs;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-public class NameNode {
-	int num_datanodes = 4;//data数目
-	int chunksize = 10;//块大小
-	Map<String,List<String>> filemap = new HashMap<>();//filename->chunk_ids
-	Map<String,Integer> chunkmap = new HashMap<>();//chunkid->chunkloc
-	Map<Integer,DataNode> datanodes = new HashMap<>();//chunkloc->datanode
+public class NameNode implements Serializable{
+	private static final long serialVersionUID = 1L;
+	public int num_datanodes = 4;//data数目
+	public int chunksize = 10;//块大小
+	public HashMap<String,List<String>> filemap = new HashMap<>();//filename->chunk_ids
+	public HashMap<String,Integer> chunkmap = new HashMap<>();//chunkid->chunkloc
+	public HashMap<Integer,DataNode> datanodes = new HashMap<>();//chunkloc->datanode
 	
 	public NameNode() {
 		init_datanodes();

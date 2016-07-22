@@ -1,6 +1,8 @@
 package com.uestc.hdfs;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,9 +11,22 @@ import java.util.Map.Entry;
 
 
 public class Clinet {
-	NameNode nameNode;
+	NameNode nameNode = null;
 	public Clinet(NameNode nn) {
-		nameNode = nn;
+		this.nameNode = nn;
+	}
+	
+	public void NameNodeSerial(){
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream("namenode.serial"));
+			oos.writeObject(nameNode);
+			oos.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("serial failed!");
+		}
 	}
 	
 	public void write(String filename,String data)throws IOException{

@@ -5,8 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class DataNode {
+public class DataNode implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
 	String dir_name = null;
 	public DataNode(int chunkloc) {
 		super();
